@@ -29,28 +29,27 @@ ENV PATH /opt/conda/envs/${CONDA_ENV_NAME}/bin:$PATH
 RUN echo "source activate ${CONDA_ENV_NAME}" > ~/.bashrc
 
 # Install jupyter and notebook extension
-RUN /bin/bash -c "source ~/.bashrc && conda install -q -y jupyter ipywidgets~=7.4.2 && \
+RUN conda install -q -y jupyter ipywidgets~=7.4.2 && \
     jupyter nbextension enable --py widgetsnbextension && \
-    jupyter notebook --generate-config"
+    jupyter notebook --generate-config
 
 # Install jupyterlab
-RUN /bin/bash -c "source ~/.bashrc && conda install -q -y jupyterlab~=0.35.5 && jupyter serverextension enable --py jupyterlab"
+RUN conda install -q -y jupyterlab~=0.35.5 && jupyter serverextension enable --py jupyterlab
 
 # Install git extension on jupyterlab
-RUN /bin/bash -c "source ~/.bashrc && conda install -q -y nodejs~=10.13.0 && \
+RUN conda install -q -y nodejs~=10.13.0 && \
     jupyter labextension install @jupyterlab/git && \
     pip --no-cache-dir install jupyterlab-git~=0.6.1 && \
-    jupyter serverextension enable --py jupyterlab_git"
+    jupyter serverextension enable --py jupyterlab_git
 
 # Install github extension on jupyterlab
-RUN /bin/bash -c "source ~/.bashrc && \
-    jupyter labextension install @jupyterlab/github && \
+RUN jupyter labextension install @jupyterlab/github && \
     pip --no-cache-dir install jupyterlab_github~=0.7.0 && \
-    jupyter serverextension enable --sys-prefix jupyterlab_github"
+    jupyter serverextension enable --sys-prefix jupyterlab_github
 
 # Install packages
-RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/requirements.txt -o requirements.txt
-RUN /bin/bash -c "source ~/.bashrc && pip --no-cache-dir install -r requirements.txt"
+RUN curl -sSL https://raw.githubusercontent.com/arashash/nma-docker/main/requirements.txt -o requirements.txt
+RUN pip --no-cache-dir install -r requirements.txt
 RUN rm requirements.txt
 
 # Copy jupyter password
@@ -88,4 +87,4 @@ WORKDIR /workspace
 
 RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/tutorial_change_passwd.ipynb -o /workspace/tutorial_change_passwd.ipynb
 
-RUN /bin/bash -c "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/workspace"
+RUN jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/workspace
