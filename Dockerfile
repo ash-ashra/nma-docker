@@ -88,4 +88,4 @@ WORKDIR /workspace
 
 RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/tutorial_change_passwd.ipynb -o /workspace/tutorial_change_passwd.ipynb
 
-CMD jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/workspace
+RUN /bin/bash -c "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/workspace"
