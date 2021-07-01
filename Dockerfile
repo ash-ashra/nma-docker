@@ -4,7 +4,7 @@ ENV PYTHON_VERSION 3.7
 ENV CONDA_ENV_NAME jupyterlab
 ENV LANG C.UTF-8
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -yq --no-install-recommends \
     apt-utils \
     ca-certificates \
     apt-transport-https \
@@ -14,48 +14,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     bzip2 \
     git \
-    sudo \
-    fonts-liberation
-
-# Installation miniconda3
-RUN curl -sSL http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh && \
-    bash /tmp/miniconda.sh -bfp /usr/local && \
-    rm -rf /tmp/miniconda.sh
-
-# Set up conda environment
-RUN conda update -y conda && \
-    conda create -n ${CONDA_ENV_NAME} python=${PYTHON_VERSION}
-ENV PATH /opt/conda/envs/${CONDA_ENV_NAME}/bin:$PATH
-RUN source activate ${CONDA_ENV_NAME}
-
-# Install jupyter and notebook extension
-RUN conda install -q -y jupyter ipywidgets~=7.4.2 && \
-    jupyter nbextension enable --py widgetsnbextension && \
-    jupyter notebook --generate-config
-
-# Install jupyterlab
-RUN conda install -q -y jupyterlab~=0.35.5 && jupyter serverextension enable --py jupyterlab
-
-# Install git extension on jupyterlab
-RUN conda install -q -y nodejs~=10.13.0 && \
-    jupyter labextension install @jupyterlab/git && \
-    pip --no-cache-dir install jupyterlab-git~=0.6.1 && \
-    jupyter serverextension enable --py jupyterlab_git
-
-# Install github extension on jupyterlab
-RUN jupyter labextension install @jupyterlab/github && \
-    pip --no-cache-dir install jupyterlab_github~=0.7.0 && \
-    jupyter serverextension enable --sys-prefix jupyterlab_github
-
-# Install packages
-RUN curl -sSL https://raw.githubusercontent.com/arashash/nma-docker/main/requirements.txt -o requirements.txt
-RUN pip --no-cache-dir install -r requirements.txt
-RUN rm requirements.txt
-
-# Copy jupyter password
-RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/jupyter_notebook_config.py -o /root/.jupyter/jupyter_notebook_config.py
-
-RUN apt-get update && apt-get install -yq --no-install-recommends \
+    fonts-liberation \
     build-essential \
     emacs \
     inkscape \
@@ -73,6 +32,22 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libsm6 \
     libxext6 \
     libxrender-dev
+
+# Install jupyter and notebook extension
+RUN pip --no-cache-dir install jupyter ipywidgets~=7.4.2 && \
+    jupyter nbextension enable --py widgetsnbextension && \
+    jupyter notebook --generate-config
+
+# Install jupyterlab
+RUN pip --no-cache-dir install jupyterlab~=0.35.5 && jupyter serverextension enable --py jupyterlab
+
+# Install packages
+RUN curl -sSL https://raw.githubusercontent.com/arashash/nma-docker/main/requirements.txt -o requirements.txt
+RUN pip --no-cache-dir install -r requirements.txt
+RUN rm requirements.txt
+
+# Copy jupyter password
+RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/jupyter_notebook_config.py -o /root/.jupyter/jupyter_notebook_config.py
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
