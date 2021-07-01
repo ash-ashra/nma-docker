@@ -32,14 +32,17 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libsm6 \
     libxext6 \
     libxrender-dev
+    
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install jupyter and notebook extension
-RUN pip --no-cache-dir install jupyter ipywidgets~=7.4.2 && \
+RUN pip --no-cache-dir install jupyter ipywidgets && \
     jupyter nbextension enable --py widgetsnbextension && \
     jupyter notebook --generate-config
 
 # Install jupyterlab
-RUN pip --no-cache-dir install jupyterlab~=0.35.5 && jupyter serverextension enable --py jupyterlab
+RUN pip --no-cache-dir install jupyterlab && jupyter serverextension enable --py jupyterlab
 
 # Install packages
 RUN curl -sSL https://raw.githubusercontent.com/arashash/nma-docker/main/requirements.txt -o requirements.txt
@@ -48,10 +51,6 @@ RUN rm requirements.txt
 
 # Copy jupyter password
 RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/jupyter_notebook_config.py -o /root/.jupyter/jupyter_notebook_config.py
-
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-RUN conda clean --all --yes
 
 # Expose port & cmd
 EXPOSE 8888
