@@ -26,7 +26,7 @@ RUN curl -sSL http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.
 RUN conda update -y conda && \
     conda create -n ${CONDA_ENV_NAME} python=${PYTHON_VERSION}
 ENV PATH /opt/conda/envs/${CONDA_ENV_NAME}/bin:$PATH
-RUN echo "source activate ${CONDA_ENV_NAME}" > ~/.bashrc
+RUN source activate ${CONDA_ENV_NAME}
 
 # Install jupyter and notebook extension
 RUN conda install -q -y jupyter ipywidgets~=7.4.2 && \
