@@ -28,13 +28,13 @@ RUN apt-get -qq update && apt-get install -y --no-install-recommends \
     python3-dev \
     python3-pip \
     python3-setuptools \
-    # ---- nbconvert dependencies ----
-    pandoc \
-    inkscape \
-    texlive-xetex \
-    texlive-fonts-recommended \
-    texlive-latex-recommended
-    # ----
+#     # ---- nbconvert dependencies ----
+#     pandoc \
+#     inkscape \
+#     texlive-xetex \
+#     texlive-fonts-recommended \
+#     texlive-latex-recommended
+#     # ----
     
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -47,8 +47,8 @@ RUN pip3 --no-cache-dir install jupyter ipywidgets && \
 # Install jupyterlab
 RUN pip3 --no-cache-dir install jupyterlab && jupyter serverextension enable --py jupyterlab
 
-# Install nbconvert for downloading to PDF option
-RUN pip3 --no-cache-dir install nbconvert
+# # Install nbconvert for downloading to PDF option
+# RUN pip3 --no-cache-dir install nbconvert
 
 # Install packages
 RUN curl -sSL https://raw.githubusercontent.com/NeuromatchAcademy/course-content/master/requirements.txt -o requirements.txt
