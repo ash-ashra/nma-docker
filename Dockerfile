@@ -17,24 +17,23 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     lmodern \
     pandoc \
     ffmpeg \
-    python-dev \
-    python-setuptools \
-    python-pip
+    python3-dev \
+    python3-pip
     
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install jupyter and notebook extension
-RUN pip --no-cache-dir install jupyter ipywidgets && \
+RUN pip3 --no-cache-dir install jupyter ipywidgets && \
     jupyter nbextension enable --py widgetsnbextension && \
     jupyter notebook --generate-config
 
 # Install jupyterlab
-RUN pip --no-cache-dir install jupyterlab && jupyter serverextension enable --py jupyterlab
+RUN pip3 --no-cache-dir install jupyterlab && jupyter serverextension enable --py jupyterlab
 
 # Install packages
 RUN curl -sSL https://raw.githubusercontent.com/arashash/nma-docker/main/requirements.txt -o requirements.txt
-RUN pip --no-cache-dir install -r requirements.txt
+RUN pip3 --no-cache-dir install -r requirements.txt
 RUN rm requirements.txt
 
 # Copy jupyter password
