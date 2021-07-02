@@ -5,7 +5,7 @@ This project facilitates access to NMA content for students who like to run ever
 Docker: https://docs.docker.com/get-docker/
 
 ## Usage:
-Open your terminal in Linux or MacOS (in Windows called Command Prompt)
+Open your terminal in Linux or MacOS (or Command Prompt in Windows)
 ### Download (or update) it:
 ``docker pull arashash/nma``
 
