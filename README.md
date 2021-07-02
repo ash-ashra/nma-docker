@@ -10,7 +10,7 @@ Open your terminal in Linux or MacOS (or Command Prompt in Windows)
 ``docker pull arashash/nma``
 
 ### Run it
-``docker run arashash/nma``
+``docker run -p 8888:8888 arashash/nma``
 
 ### Access it
 Use the given link that starts with `http://127.0.0.1:8888/lab?token=`
