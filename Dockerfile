@@ -6,32 +6,18 @@ ENV LANG C.UTF-8
 
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     apt-utils \
+    build-essential \
     ca-certificates \
     apt-transport-https \
-    gnupg2 \
-    wget \
-    unzip \
-    curl \
-    bzip2 \
     git \
+    wget \
+    curl \
+    unzip \
     fonts-liberation \
-    build-essential \
-    emacs \
-    inkscape \
-    jed \
-    libsm6 \
-    libxext-dev \
-    libxrender1 \
     lmodern \
-    nano \
-    netcat \
     pandoc \
-    python-dev \
     ffmpeg \
-    libgtk2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
+    python-dev \
     pip
     
 RUN apt-get clean && \
@@ -59,6 +45,7 @@ EXPOSE 8888
 # Set default work directory
 RUN mkdir /workspace
 WORKDIR /workspace
+RUN git clone https://github.com/NeuromatchAcademy/course-content
 
 RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/tutorial_change_passwd.ipynb -o /workspace/tutorial_change_passwd.ipynb
 
