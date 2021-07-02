@@ -168,4 +168,4 @@ RUN rm requirements.txt
 RUN git clone https://github.com/NeuromatchAcademy/course-content
 
 USER ${NB_UID}
-CMD jupyter lab --ip=* --port=8888 --no-browser --notebook-dir=/workspace
+CMD jupyter lab --ip=* --port=8888 --no-browser
