@@ -1,10 +1,15 @@
-FROM ubuntu:18.04
+LABEL maintainer="Arash Ash <arash.ash@neuromatch.io>"
+
+# OS/ARCH: Ubuntu 20.04 (focal)
+ARG ROOT_CONTAINER=ubuntu:focal-20210609@sha256:376209074d481dca0a9cf4282710cd30a9e7ff402dea8261acdaaf57a18971dd
+ARG BASE_CONTAINER=$ROOT_CONTAINER
+FROM $BASE_CONTAINER
 
 ENV PYTHON_VERSION 3.7
 ENV LANG C.UTF-8
-LABEL maintainer="Arash Ash <arash.ash@neuromatch.io>"
+USER root
 
-RUN apt-get update --yes && apt-get install --yes --no-install-recommends \
+RUN apt-get -qq update && apt-get install -y --no-install-recommends \
     sudo \
     tini \
     run-one \
