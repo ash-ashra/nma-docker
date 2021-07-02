@@ -63,5 +63,5 @@ RUN mkdir /workspace
 WORKDIR /workspace
 RUN git clone https://github.com/NeuromatchAcademy/course-content
 
-USER ${NB_UID}
+USER ${NB_USER}
 CMD jupyter lab --ip=* --port=8888 --no-browser --notebook-dir=/workspace
