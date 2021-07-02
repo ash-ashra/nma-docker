@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     pandoc \
     ffmpeg \
     python3-dev \
-    python3-pip
+    python3-pip \
+    python3-setuptools 
     
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -32,7 +33,7 @@ RUN pip3 --no-cache-dir install jupyter ipywidgets && \
 RUN pip3 --no-cache-dir install jupyterlab && jupyter serverextension enable --py jupyterlab
 
 # Install packages
-RUN curl -sSL https://raw.githubusercontent.com/arashash/nma-docker/main/requirements.txt -o requirements.txt
+RUN curl -sSL https://raw.githubusercontent.com/NeuromatchAcademy/course-content/master/requirements.txt -o requirements.txt
 RUN pip3 --no-cache-dir install -r requirements.txt
 RUN rm requirements.txt
 
