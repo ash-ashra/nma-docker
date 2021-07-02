@@ -27,7 +27,7 @@ RUN apt-get update --yes && apt-get install --yes --no-install-recommends \
     inkscape \
     texlive-xetex \
     texlive-fonts-recommended \
-    texlive-plain-generic \
+    texlive-plain-generic
     # ----
     
 RUN apt-get clean && \
