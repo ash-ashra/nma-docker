@@ -1,10 +1,13 @@
 FROM ubuntu:18.04
 
 ENV PYTHON_VERSION 3.7
-ENV CONDA_ENV_NAME jupyterlab
 ENV LANG C.UTF-8
+LABEL maintainer="Arash Ash <arash.ash@neuromatch.io>"
 
-RUN apt-get update && apt-get install -yq --no-install-recommends \
+RUN apt-get update --yes && apt-get install --yes --no-install-recommends \
+    sudo \
+    tini \
+    run-one \
     apt-utils \
     build-essential \
     ca-certificates \
@@ -13,13 +16,19 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     wget \
     curl \
     unzip \
+    locales \
     fonts-liberation \
     lmodern \
-    pandoc \
-    ffmpeg \
     python3-dev \
     python3-pip \
-    python3-setuptools 
+    python3-setuptools \
+    # ---- nbconvert dependencies ----
+    pandoc \
+    inkscape \
+    texlive-xetex \
+    texlive-fonts-recommended \
+    texlive-plain-generic \
+    # ----
     
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -32,13 +41,13 @@ RUN pip3 --no-cache-dir install jupyter ipywidgets && \
 # Install jupyterlab
 RUN pip3 --no-cache-dir install jupyterlab && jupyter serverextension enable --py jupyterlab
 
+# Install nbconvert for downloading to PDF option
+RUN pip3 --no-cache-dir install nbconvert
+
 # Install packages
 RUN curl -sSL https://raw.githubusercontent.com/NeuromatchAcademy/course-content/master/requirements.txt -o requirements.txt
 RUN pip3 --no-cache-dir install -r requirements.txt
 RUN rm requirements.txt
-
-# Copy jupyter password
-RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/jupyter_notebook_config.py -o /root/.jupyter/jupyter_notebook_config.py
 
 # Expose port & cmd
 EXPOSE 8888
@@ -48,6 +57,5 @@ RUN mkdir /workspace
 WORKDIR /workspace
 RUN git clone https://github.com/NeuromatchAcademy/course-content
 
-RUN curl -sSL https://raw.githubusercontent.com/gzupark/jupyterlab-docker/master/assets/tutorial_change_passwd.ipynb -o /workspace/tutorial_change_passwd.ipynb
-
-CMD jupyter lab --ip=* --port=8888 --no-browser --notebook-dir=/workspace --allow-root
+USER jovian
+CMD jupyter lab --ip=* --port=8888 --no-browser --notebook-dir=/workspace
