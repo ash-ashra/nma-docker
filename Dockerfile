@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     pandoc \
     ffmpeg \
     python-dev \
-    pip
+    python3-pip
     
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
