@@ -40,6 +40,7 @@ ARG miniforge_checksum="1e89ee86afa06e23b2478579be16a33fff6cff346314f6a6382fd20b
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
+    git \
     curl \
     tini \
     wget \
