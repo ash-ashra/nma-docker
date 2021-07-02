@@ -31,7 +31,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libgtk2.0-0 \
     libsm6 \
     libxext6 \
-    libxrender-dev
+    libxrender-dev \
+    jupyter
     
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
