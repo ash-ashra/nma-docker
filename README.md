@@ -13,7 +13,4 @@ Open your terminal in Linux or MacOS (or Command Prompt in Windows)
 ``docker run arashash/nma``
 
 ### Access it
-http://127.0.0.1:8888/lab
-
-### Athenticate it
-password: `jupyterlab`
+Use the given link that starts with `http://127.0.0.1:8888/lab?token=`
