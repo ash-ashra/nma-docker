@@ -1,9 +1,10 @@
-LABEL maintainer="Arash Ash <arash.ash@neuromatch.io>"
-
 # OS/ARCH: Ubuntu 20.04 (focal)
 ARG ROOT_CONTAINER=ubuntu:focal-20210609@sha256:376209074d481dca0a9cf4282710cd30a9e7ff402dea8261acdaaf57a18971dd
 ARG BASE_CONTAINER=$ROOT_CONTAINER
 FROM $BASE_CONTAINER
+
+LABEL maintainer="Arash Ash <arash.ash@neuromatch.io>"
+ARG NB_USER="jovyan"
 
 ENV PYTHON_VERSION 3.7
 ENV LANG C.UTF-8
@@ -62,5 +63,5 @@ RUN mkdir /workspace
 WORKDIR /workspace
 RUN git clone https://github.com/NeuromatchAcademy/course-content
 
-USER jovian
+USER ${NB_UID}
 CMD jupyter lab --ip=* --port=8888 --no-browser --notebook-dir=/workspace
