@@ -165,7 +165,7 @@ RUN curl -sSL https://raw.githubusercontent.com/NeuromatchAcademy/course-content
 RUN pip --no-cache-dir install -r requirements.txt
 RUN rm requirements.txt
 
-RUN git clone https://github.com/NeuromatchAcademy/course-content
+RUN git clone --depth 1 https://github.com/NeuromatchAcademy/course-content
 
 USER ${NB_UID}
 CMD jupyter lab --ip=* --port=8888 --no-browser
